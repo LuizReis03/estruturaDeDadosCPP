@@ -1,14 +1,14 @@
 #include <iostream>
 using namespace std;
 
-//define a estrutura que ser· a fila
+//define a estrutura que ser√° a fila
 typedef struct{
 	int inicio = 0;
 	int fim = 0;
 	int item[5];
 } FILA;
 
-//retorna se a fila est· vazia ou n„o 
+//retorna se a fila est√° vazia ou n√£o 
 bool filaVazia(FILA f){
 	if(f.inicio == f.fim) {
 		return true;
@@ -17,7 +17,7 @@ bool filaVazia(FILA f){
 	}
 }
 
-//retorna se a fila est· cheia ou n„o
+//retorna se a fila est√° cheia ou n√£o
 bool filaCheia(FILA f){
 	int tamanho = sizeof(f.item)/sizeof(int);
 	
@@ -42,71 +42,56 @@ int desenfilera(FILA &f){
 
 //mostra os valores armazenados na fila
 void mostraFila(FILA f) {
-	cout << "Valores da fila: ";
+	cout << "\nValores da fila: ";
 	for(int i = f.inicio; i < f.fim; i++)  {
 		cout << f.item[i] << " ";
 	}
-	cout << "\n";
+	cout << "\n\n";
 }
 
-//cÛdigo para testar a implementaÁ„o
+//c√≥digo para testar a implementa√ß√£o
 int main() {
 	FILA s; //cria fila
+	int opc = 0;
+	int valor = 0;
 	
-	//verifica que a fila est· vazia
-	if(filaVazia(s)) {
-		cout << "A fila esta vazia!" << endl;
-	}else{
-		cout << "A fila nao esta vazia";
-	}
-	
-	//Enfileira o valor e verifica se a fila est· vazia
-	enfileirar(s,10);
-	if(filaVazia(s)) {
-		cout << "A fila esta vazia" << endl;
-	}else{
-		cout << "A fila nao esta vazia" << endl;
-	}
-	
-	//Insere 3 elementos na fila
-	enfileirar(s,20);
-	enfileirar(s,30);
-	enfileirar(s,50);
-	
-	//mostra os valores da fila
-	mostraFila(s);
-	
-	//verifica que a fila est· cheia
-	if(filaCheia(s)) {
-		cout << "A fila esta cheia" << endl;
-	}else{
-		cout << "A fila nao esta cheia" << endl;
-	}
-	
-	//enfileira valor e verifica se a fila esta cheia
-	enfileirar(s,50);
-	mostraFila(s);
-	if(filaCheia(s)){
-		cout << "A fila esta vazia" << endl;
-	}else{
-		cout << "A fila nao esta vazia" << endl;
-	}
-	
-	//desempilha e mostrar o valor desempilhado
-	cout << "Valor removido da fila: " << desenfilera(s) << endl;
-	
-	mostraFila(s);
-	
-	if(filaCheia(s)) {
-		cout << "A fila esta cheia" << endl;
-	}else{
-		cout << "A fila nao esta cheia" << endl;
+	while(1){
+		cout << "Digite a opcao que deseja: \n1-Adicionar valor na lista \n2-Remover valor da lista \n3-Mostrar os valores da lista \n4-Sair\n\n";
+		cin >> opc;
+		cout << "\n";
+			
+		switch (opc) {
+			case 1:
+				if(filaCheia(s)) {
+			        cout<<"\nA fila esta cheia.\n\n";
+			    } else {
+			        cout << "\nDigite o valor que deseja inserir na fila: ";
+					cin >> valor;
+					enfileirar(s, valor);
+					cout << "\nAdicionado com sucesso!\n\n";
+			    }
+				break;
+			case 2:
+				if(filaVazia(s)) {
+			        cout<<"\nA fila esta vazia.\n\n";
+			    }else{
+			    	desenfilera(s);
+					cout << "\nRemovido com sucesso!\n\n";
+				}
+				break;
+			case 3:
+				mostraFila(s);
+				break;
+			case 4:
+				cout << "\n\nPrograma fechado!";
+				exit(0);
+				break;
+			default:
+            	cout << "\nAs opcoes sao apenas de 1 a 4!!\n\n";
+    			break;
+		}
+
 	}
 	
 	return 0;
 }
-
-
-
-
-

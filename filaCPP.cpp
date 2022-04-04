@@ -1,14 +1,14 @@
 #include <iostream>
 using namespace std;
 
-//define a estrutura que será a fila
+//define a estrutura que serao a fila
 typedef struct{
 	int inicio = 0;
 	int fim = 0;
 	int item[5];
 } FILA;
 
-//retorna se a fila está vazia ou não 
+//retorna se a fila esta vazia ou nao
 bool filaVazia(FILA f){
 	if(f.inicio == f.fim) {
 		return true;
@@ -17,7 +17,7 @@ bool filaVazia(FILA f){
 	}
 }
 
-//retorna se a fila está cheia ou não
+//retorna se a fila esta cheia ou nao
 bool filaCheia(FILA f){
 	int tamanho = sizeof(f.item)/sizeof(int);
 	
@@ -49,7 +49,7 @@ void mostraFila(FILA f) {
 	cout << "\n\n";
 }
 
-//código para testar a implementação
+//codigo para testar a implementacao
 int main() {
 	FILA s; //cria fila
 	int opc = 0;

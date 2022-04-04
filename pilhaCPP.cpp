@@ -1,101 +1,127 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
 #include <iostream>
-#define tamanho 5
 using namespace std;
-
-//define a estrutura que será a pilha
-//a estrutura armazena a indicação do topo da pilha e um vetor com os itens (valores) da pilha
-typedef struct{
-      int topo = 0;
-      int item [tamanho] ;
-} PILHA;
-
-  
-//retorna se a pilha está vazia ou não
-bool pilhaVazia(PILHA p){
-    if(p.topo == 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-//retorna se a pilha está cheia ou não
-bool pilhaCheia(PILHA p) {
-	int tam = sizeof(p.item)/sizeof(int); //determina o tamanho do vetor
 	
-    if (p.topo < tam) {
-        return false;
-    } else {
-        return true;
-    }
+//CRIA ESTRUTURA DE UMA PILHA
+struct pilha{
+	
+	int topo;
+	int capacidade;
+	float *pElem;
+	
+};
+
+pilha p;
+
+//FUNÃ‡ÃƒO PARA CRIA UMA PILHA
+void criaPilha (struct pilha *p, int capacidade){
+	p -> topo -1;
+	p -> pElem = (float*) malloc (capacidade *sizeof(float));
 }
 
-//adiciona valor na pilha
-void empilha(PILHA &p, int x){
-    p.item[p.topo++]=x;
-}
 
-//remove valor da pilha
-int desempilha(PILHA &p){
-    return (p.item[--p.topo]) ;
-}
-
-//mostra os valores armazenados na pilha
-void mostraPilha(PILHA p) {
-	cout << "Valores da pilha: ";
-	for (int i = 0; i < p.topo; i++) {
-		cout << p.item[i] << " ";
+//FUNÃ‡ÃƒO PARA VERIFICAR SE A PILHA ESTÃ VAZIA
+int verificaPilhaVazia (struct pilha*p){
+	if (p -> topo == -1 ){
+		return 1;
 	}
-	cout << "\n";
+	else{
+		return 0;
+	}
 }
 
-//Código para testar a implementação.
-int main(){
-    PILHA s; //criar a pilha
-    
-    //Verificar que a pilha está vazia
-    if(pilhaVazia(s)) {
-        cout<<"A pilha está vazia."<<endl;
-    } else {
-        cout<<"A pilha não está vazia."<<endl;
-    }
-    
-    //Empilha valor e verifica se a pilha está vazia
-    empilha(s,10);
-    if(pilhaVazia(s)) {
-        cout<<"A pilha está vazia."<<endl;
-    } else {
-        cout<<"A pilha não está vazia."<<endl;
-    }
-    
-    //Empilhar 3 elementos
-    empilha(s,20);
-    empilha(s,30);
-    empilha(s,40);
+//FUNÃ‡ÃƒO PARA VERIFICAR SE A PILHA ESTÃ CHEIA
+int verificaPilhaCheia(struct pilha*p) {
+	if(p->topo == p->capacidade -1){
+		return 1;
+	}else{
+		return 0;
+	}
+}
 
-	//Mostra os valores da pilha
-    mostraPilha(s);
-    
-    //Verifica que a pilha está cheia
-    if(pilhaCheia(s)) {
-        cout<<"A pilha está cheia."<<endl;
-    } else {
-        cout<<"A pilha não está cheia."<<endl;
-    }
-    
-    //Empilha valor e verifica se a pilha está cheia
-    empilha(s,50);
-    mostraPilha(s);
-    if(pilhaCheia(s)) {
-        cout<<"A pilha está cheia."<<endl;
-    } else {
-        cout<<"A pilha não está cheia."<<endl;
-    }
-    
-    //Desempilha e mostrar o valor desempilhado
-    cout<<"Valor desempilhado: "<< desempilha(s) <<endl;
-
-	mostraPilha(s);
+//FUNÃ‡ÃƒO PARA ADICIONAR A PILHA
+void empilha (struct pilha*p, float n ){
+	p-> topo++;
 	
-    return 0;
+	p->pElem[p->topo] = n;
+	
+}
+
+//FUNÃ‡ÃƒO PARA RETIRAR DA PILHA
+float desempilha (struct pilha*p){
+	p-> topo--;
+	
+	float gerencia = p->pElem[p->topo];
+	
+	return gerencia;
+	
+}
+
+//
+float retornaAoTopo(struct pilha*p) {
+	return p->pElem [p->topo];
+}
+
+int main() {
+	struct pilha novaPilha;
+	int  capacidade = 0;
+	int opcao = 0;
+	float valor = 0.0;
+	
+	cout << "Digite a capacidade da pilha: " << endl;
+	cin >> capacidade;
+	criaPilha(&novaPilha, capacidade);
+	
+	
+	while (1){
+		cout << "\n1)Empilhar\n";
+		cout << "2)Desempilhar\n";
+		cout << "3)Mostrar topo da pilha\n";
+		cout << "4)Sair\n";
+		cout << "\nDigite a opcao desejada: ";
+		cin >> opcao;
+		
+		switch(opcao){
+			//empilha
+			case 1: 
+				if (verificaPilhaCheia(&novaPilha) == 1){
+					cout << "\nA pilha esta cheia!\n";
+				}else{
+					cout << "Digite o valor: ";
+					cin >> valor;
+					empilha(&novaPilha, valor);
+				}
+				break;
+			//desempilha
+			case 2:
+				if (verificaPilhaVazia(&novaPilha) == 1){
+					cout << "\nA pilha esta vazia!\n";
+				}else{
+					valor = desempilha(&novaPilha);
+					cout << "\nFoi desempilhado!\n";
+				}
+				break;
+			//mostra o topo da lista
+			case 3:
+				if (verificaPilhaVazia(&novaPilha) == 1){
+					cout << "\nA pilha esta vazia!\n";
+				}else{
+					valor = retornaAoTopo(&novaPilha);
+					cout << "\nO topo da pilha e: " << valor << "\n";
+				}
+				break;
+			//sai do loop
+			case 4:
+				exit(0);
+				break;
+			//opÃ§Ã£o diferente de 1 ou 4, para o sistema
+			default:
+				cout << "\nAs opcoes sao apenas de 1 a 4!!\n\n";
+    			break;
+		}
+		
+	}
+	
 }

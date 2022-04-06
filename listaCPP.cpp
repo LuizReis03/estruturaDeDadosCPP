@@ -8,12 +8,21 @@ int main(){
 	int opc = 0;
 	int capacidade = 0;
 	int valor = 0;
-	int primeiraPos = 0;
-	int segundaPos = 0;
+	int qtde = 0;
 	
-	cout << "Digite o tamanho da lista: ";
-	cin >> capacidade;
-	capacidade+=1;
+	while(1){
+		cout << "Digite o tamanho da lista: ";
+		cin >> capacidade;
+		capacidade-1;
+	
+		if(capacidade == 0){
+			cout << "Nao e possivel criar lista com capacidade de 0\n\n";
+			continue;
+		}else{
+			cout << "\nLista criada!\n";
+			break;
+		}
+	}
 	
 	list<int>::iterator it;
 	for(int i=0;i<capacidade;i++){
@@ -24,10 +33,10 @@ int main(){
 	int ultimoItem = lista.back();
 	
 	while (1){
-		cout << "\n1)Remover o primeiro item da lista\n";
+		cout << "\n\n1)Remover o primeiro item da lista\n";
 		cout << "2)Remover o ultimo item da lista\n";
-		cout << "3)Mostrar os valores da lista\n";
-		cout << "4)Adicionar valor na primeira posicao\n";
+		cout << "3)Adicionar valor no final da lista\n";
+		cout << "4)Mostrar os valores da lista\n";
 		cout << "5)Sair\n";
 		cout << "\nDigite a opcao desejada: ";
 		cin >> opc;
@@ -35,27 +44,42 @@ int main(){
 		switch(opc){
 			
 			case 1: 
+				//remove primeiro item
 				lista.remove(primeiroItem);
 				cout << "Removido com sucesso!!\n\n";
 				break;
 			
 			case 2:
+				//remove ultimo item
 				lista.remove(ultimoItem);
 				cout << "Removido com sucesso!!\n\n";
 				break;
 			
 			case 3:
-				cout << "Digite o valor: ";
-				cin >> valor;
-				cout << "Inserir entre a posicao: ";
-				cin >> primeiraPos;
-				cout << "E a posicao: ";
-				cin >> segundaPos;
-				lista.insert(valor, primeiraPos, segundaPos);
+				//insere valores
+				if (lista.size() < capacidade){
+					cout << "Digite a quantidade: ";
+					cin >> qtde;
+					if(qtde > capacidade) {
+						cout << "A quantidade e maior do que o suportado!\n\n";
+					}else{
+					cout << "Digite o valor: ";
+					cin >> valor;
+					lista.insert(it, qtde, valor);
+					cout << "Inserido com sucesso!!\n\n";
+					}
+				}else{
+					cout << "A lista esta cheia!!\n\n";
+				}
 				break;
 				
 			case 4:
-				
+				//printa os valores da lista
+				cout << "\nValores da lista: ";
+				for(it = lista.begin(); it!=lista.end();it++){
+					cout << *it << " ";
+				}
+	
 				break;
 			
 			case 5:
@@ -71,4 +95,3 @@ int main(){
 	
 	return 0;
 }
-

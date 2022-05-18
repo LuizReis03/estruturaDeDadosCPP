@@ -37,35 +37,48 @@ int main(){
 	
 	while (1){
 		cout << "\n\n1)Remover um item da lista\n";
-		cout << "2)Adicionar valor no final da lista\n";
+		cout << "2)Adicionar valor na lista\n";
 		cout << "3)Mostrar os valores da lista\n";
-		cout << "4)Sair\n";
+		cout << "4)Limpar toda a lista\n";
+		cout << "5)Sair\n";
 		cout << "\nDigite a opcao desejada: ";
 		cin >> opc;
 	
 		switch(opc){
 			
 			case 1: 
+				system("cls");
+				cout << "\nValores da lista: ";
+				for(it = lista.begin(); it!=lista.end();it++){
+					cout << *it << " ";
+				}
 				//remove primeiro item
-				cout << "Qual a posicao do item que deseja remover: ";
+				cout << "\n\nQual a posicao do item que deseja remover: ";
 				cin >> posicao;
 				
-				for(int i=0;i<lista.size();i++){
-					if(i == posicao){
-						
-						lista.remove(posicao);
-					}
-				}				
-				cout << "Removido com sucesso!!\n\n";
+				if (posicao == 1){
+					lista.pop_front();
+				}else if(posicao == lista.size()){
+					lista.pop_back();
+				}else{
+					for(int i=0;i<lista.size();i++){
+						if(i == posicao){
+							
+							lista.remove(posicao);
+						}
+					}		
+					cout << "Removido com sucesso!!\n\n";
+				}
 				break;
 			
 			case 2:
 				//insere valores
+				system("cls");
 				if (lista.size() < capacidade){
 					cout << "Digite a quantidade: ";
 					cin >> qtde;
-					if(qtde > capacidade) {
-						cout << "A quantidade e maior do que o suportado!\n\n";
+					if(qtde > capacidade || qtde < 0) {
+						cout << "A quantidade e invalida!\n\n";
 					}else{
 					cout << "Digite o valor: ";
 					cin >> valor;
@@ -74,20 +87,30 @@ int main(){
 					}
 				}else{
 					cout << "A lista esta cheia!!\n\n";
-				}
+				}	
 				break;
 				
 			case 3:
 				//printa os valores da lista
+				system("cls");
 				cout << "\nValores da lista: ";
 				for(it = lista.begin(); it!=lista.end();it++){
 					cout << *it << " ";
 				}
 	
 				break;
-			
+				
 			case 4:
+				//limpa a lista toda
+				system("cls");	
+				lista.clear();
+				cout << "\nElementos removidos com sucesso!!\n";
+				break;
+			
+			case 5:
 				//encerra o programa
+				system("cls");
+				cout << "\nPrograma finalizado com sucesso!!";
 				exit(0);
 				break;
 			
